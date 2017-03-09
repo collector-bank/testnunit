@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="07b60f37-a3e4-4b48-ba22-0966f636b355" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/10.0/project-config.xsd">
+  <name>testnunit</name>
+  <description />
+  <settings>
+    <options>
+      <option name="checkoutMode" value="ON_SERVER" />
+      <option name="cleanBuild" value="true" />
+    </options>
+    <parameters>
+      <param name="solutionfile" value="testnunit.sln" />
+    </parameters>
+    <build-runners>
+      <runner id="RUNNER_64" name="" type="jb.nuget.installer">
+        <parameters>
+          <param name="nuget.path" value="%teamcity.tool.NuGet.CommandLine.DEFAULT%" />
+          <param name="nuget.updatePackages.mode" value="sln" />
+          <param name="nuget.use.restore" value="restore" />
+          <param name="sln.path" value="%solutionfile%" />
+          <param name="teamcity.step.mode" value="default" />
+          <param name="toolPathSelector" value="%teamcity.tool.NuGet.CommandLine.DEFAULT%" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_99" name="" type="simpleRunner">
+        <parameters>
+          <param name="script.content" value="dir packages" />
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_68" name="" type="VS.Solution">
+        <parameters>
+          <param name="build-file-path" value="%solutionfile%" />
+          <param name="msbuild.prop.Configuration" value="Release" />
+          <param name="msbuild_version" value="14.0" />
+          <param name="run-platform" value="x86" />
+          <param name="targets" value="Rebuild" />
+          <param name="teamcity.step.mode" value="default" />
+          <param name="toolsVersion" value="14.0" />
+          <param name="vs.version" value="vs2015" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_142" name="" type="NUnit">
+        <parameters>
+          <param name="dotNetCoverage.NCover.HTMLReport.File.Sort" value="0" />
+          <param name="dotNetCoverage.NCover.HTMLReport.File.Type" value="1" />
+          <param name="dotNetCoverage.NCover.Reg" value="selected" />
+          <param name="dotNetCoverage.NCover.platformBitness" value="x86" />
+          <param name="dotNetCoverage.NCover.platformVersion" value="v2.0" />
+          <param name="dotNetCoverage.NCover3.Reg" value="selected" />
+          <param name="dotNetCoverage.NCover3.args" value="//ias .*" />
+          <param name="dotNetCoverage.NCover3.platformBitness" value="x86" />
+          <param name="dotNetCoverage.NCover3.platformVersion" value="v2.0" />
+          <param name="dotNetCoverage.NCover3.reporter.executable.args" value="//or FullCoverageReport:Html:{teamcity.report.path}" />
+          <param name="dotNetCoverage.PartCover.Reg" value="selected" />
+          <param name="dotNetCoverage.PartCover.includes" value="[*]*" />
+          <param name="dotNetCoverage.PartCover.platformBitness" value="x86" />
+          <param name="dotNetCoverage.PartCover.platformVersion" value="v2.0" />
+          <param name="dotNetTestRunner.Type" value="NUnit" />
+          <param name="nunit_enabled" value="checked" />
+          <param name="nunit_environment" value="auto" />
+          <param name="nunit_include" value="**\bin\**\*Tests.dll" />
+          <param name="nunit_path" value=".\packages\NUnit.ConsoleRunner.3.6.0\tools\nunit3-console.exe" />
+          <param name="nunit_platform" value="MSIL" />
+          <param name="nunit_version" value="NUnit-3.0.0" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_69" name="" type="jetbrains_powershell">
+        <parameters>
+          <param name="jetbrains_powershell_bitness" value="x86" />
+          <param name="jetbrains_powershell_execution" value="STDIN" />
+          <param name="jetbrains_powershell_script_code" value="Write-Host (&quot;Hello!&quot;)" />
+          <param name="jetbrains_powershell_script_mode" value="CODE" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <vcs-settings>
+      <vcs-entry-ref root-id="Teamcity_Testnunit" />
+    </vcs-settings>
+    <requirements />
+    <build-triggers>
+      <build-trigger id="vcsTrigger" type="vcsTrigger">
+        <parameters />
+      </build-trigger>
+    </build-triggers>
+    <cleanup />
+  </settings>
+</build-type>
+
