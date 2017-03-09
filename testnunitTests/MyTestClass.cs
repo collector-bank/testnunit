@@ -19,5 +19,15 @@ namespace testnunitTests
             int result = obj.Add(a, b);
             Assert.AreEqual(result, 3);
         }
+
+        [Test]
+        public void TestAddFail()
+        {
+            var obj = new MyClass();
+            int a = 1;
+            int b = 2;
+            int result = obj.Add(a, b);
+            Assert.AreEqual(result, 4);
+        }
     }
 }
